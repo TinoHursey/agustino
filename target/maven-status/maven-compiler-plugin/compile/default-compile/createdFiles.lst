@@ -1,6 +1,9 @@
-com\mycompany\agustino\LoginForm$1.class
+com\mycompany\agustino\model\User.class
 com\mycompany\agustino\Agustino.class
+com\mycompany\agustino\HibernateUtil.class
+com\mycompany\agustino\model\RedfingerSlot.class
+com\mycompany\agustino\LoginForm$1.class
+com\mycompany\agustino\WorkerDashboard.class
 com\mycompany\agustino\LoginForm.class
-com\mycompany\agustino\LoginForm$3.class
 com\mycompany\agustino\main.class
-com\mycompany\agustino\LoginForm$2.class
+com\mycompany\agustino\model\User$Role.class
