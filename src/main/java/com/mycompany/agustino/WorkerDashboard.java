@@ -1,20 +1,20 @@
 package com.mycompany.agustino;
 
+import com.mycompany.agustino.dao.RedfingerSlotDAO;
 import com.mycompany.agustino.model.RedfingerSlot;
-import com.mycompany.agustino.HibernateUtil;
-import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import org.hibernate.Session;
 
 public class WorkerDashboard extends javax.swing.JFrame {
 
+    private final RedfingerSlotDAO slotDAO;
     private JTable tabelSlot;
     private DefaultTableModel modelTabel;
     private JButton btnRefresh;
     private JButton btnTambahDummy;
 
-    public WorkerDashboard() {
+    public WorkerDashboard(RedfingerSlotDAO slotDAO) {
+        this.slotDAO = slotDAO;
         initComponentsCustom();
         loadDataSlot();
         setLocationRelativeTo(null); // Tampil di tengah layar
@@ -44,7 +44,7 @@ public class WorkerDashboard extends javax.swing.JFrame {
         btnTambahDummy = new JButton("+ Tambah Akun Demo");
         btnRefresh = new JButton("Refresh Data");
 
-        // Action: Tambah 1 data dummy langsung ke database via Hibernate
+        // Action: Tambah 1 data dummy langsung ke database via Spring DAO
         btnTambahDummy.addActionListener(e -> tambahSlotDemo());
         // Action: Muat ulang data dari database
         btnRefresh.addActionListener(e -> loadDataSlot());
@@ -56,12 +56,11 @@ public class WorkerDashboard extends javax.swing.JFrame {
         setContentPane(panel);
     }
 
-    // Mengambil data RedfingerSlot via Hibernate ORM dan dimasukkan ke tabel GUI
+    // Mengambil data RedfingerSlot via Spring DAO dan dimasukkan ke tabel GUI
     public void loadDataSlot() {
         modelTabel.setRowCount(0); // Bersihkan tabel
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<RedfingerSlot> list = session.createQuery("FROM RedfingerSlot", RedfingerSlot.class).list();
-            for (RedfingerSlot s : list) {
+        try {
+            for (RedfingerSlot s : slotDAO.findAll()) {
                 modelTabel.addRow(new Object[]{
                     s.getId(),
                     s.getNomorCloud(),
@@ -76,10 +75,9 @@ public class WorkerDashboard extends javax.swing.JFrame {
         }
     }
 
-    // Helper untuk menambah data akun cloud ke database
+    // Helper untuk menambah data akun cloud ke database via Spring DAO
     private void tambahSlotDemo() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            org.hibernate.Transaction tx = session.beginTransaction();
+        try {
             RedfingerSlot demo = new RedfingerSlot();
             demo.setNomorCloud("Cloud-" + (modelTabel.getRowCount() + 1));
             demo.setNomorAplikasi(1);
@@ -87,8 +85,7 @@ public class WorkerDashboard extends javax.swing.JFrame {
             demo.setSisaSlot(4); // default 4 slot
             demo.setJamSelesaiJoki(java.time.LocalDateTime.now().plusHours(2));
 
-            session.persist(demo);
-            tx.commit();
+            slotDAO.save(demo);
             loadDataSlot(); // Tampilkan langsung di tabel
             JOptionPane.showMessageDialog(this, "Berhasil menambah akun virtual cloud baru ke database!");
         } catch (Exception ex) {

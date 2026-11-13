@@ -1,12 +1,18 @@
 package com.mycompany.agustino;
 
+import com.mycompany.agustino.dao.ProcurementDAO;
+import com.mycompany.agustino.dao.RedfingerSlotDAO;
+import com.mycompany.agustino.dao.UserDAO;
 import com.mycompany.agustino.model.User;
 import javax.swing.JOptionPane;
-import org.hibernate.Session;
+import org.springframework.context.ApplicationContext;
 
 public class LoginForm extends javax.swing.JFrame {
 
-    public LoginForm() {
+    private final ApplicationContext context;
+
+    public LoginForm(ApplicationContext context) {
+        this.context = context;
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -81,12 +87,9 @@ public class LoginForm extends javax.swing.JFrame {
             return;
         }
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM User WHERE username = :u AND password = :p";
-            User user = session.createQuery(hql, User.class)
-                    .setParameter("u", username)
-                    .setParameter("p", password)
-                    .uniqueResult();
+        try {
+            UserDAO userDAO = context.getBean(UserDAO.class);
+            User user = userDAO.findByUsernameAndPassword(username, password);
 
             if (user != null) {
                 JOptionPane.showMessageDialog(
@@ -95,15 +98,18 @@ public class LoginForm extends javax.swing.JFrame {
                     "\nHak Akses: " + user.getRole()
                 );
 
-                // Membuka Dasbor Worker
-                WorkerDashboard dashboard = new WorkerDashboard();
-                dashboard.setVisible(true);
+                // Routing ke Dashboard sesuai Role
+                if (user.getRole() == User.Role.OWNER) {
+                    new OwnerDashboard(context.getBean(ProcurementDAO.class)).setVisible(true);
+                } else {
+                    new WorkerDashboard(context.getBean(RedfingerSlotDAO.class)).setVisible(true);
+                }
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Username atau password salah!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error Hibernate: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error Spring DAO: " + e.getMessage());
             e.printStackTrace();
         }
     }                                        
