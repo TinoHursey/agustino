@@ -51,15 +51,21 @@ public class OwnerDashboard extends JFrame {
         modelTabel = new DefaultTableModel(kolom, 0);
         JTable tabel = new JTable(modelTabel);
 
-        // Ringkasan Total Modal
+        // Ringkasan Total Modal & Tombol Laporan Akun
         lblTotalModal = new JLabel("Total Modal Keluar: Rp 0");
         lblTotalModal.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        JButton btnLaporan = new JButton("Laporan Akun");
+        btnLaporan.addActionListener(e -> CetakLaporan.tampilkanLaporan());
+        bottomPanel.add(lblTotalModal, BorderLayout.WEST);
+        bottomPanel.add(btnLaporan, BorderLayout.EAST);
 
         btnSimpan.addActionListener(e -> simpanData());
 
         mainPanel.add(formPanel, BorderLayout.NORTH);
         mainPanel.add(new JScrollPane(tabel), BorderLayout.CENTER);
-        mainPanel.add(lblTotalModal, BorderLayout.SOUTH);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
         setContentPane(mainPanel);
     }
 

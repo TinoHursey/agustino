@@ -8,6 +8,7 @@ com\mycompany\agustino\model\ProcurementHPP.class
 com\mycompany\agustino\config\AppConfig.class
 com\mycompany\agustino\HibernateUtil.class
 com\mycompany\agustino\OwnerDashboard.class
+com\mycompany\agustino\CetakLaporan.class
 com\mycompany\agustino\dao\UserDAO.class
 com\mycompany\agustino\WorkerDashboard.class
 com\mycompany\agustino\LoginForm.class
