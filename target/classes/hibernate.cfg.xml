@@ -18,5 +18,6 @@
         <!-- Mapping Entities -->
         <mapping class="com.mycompany.agustino.model.User"/>
         <mapping class="com.mycompany.agustino.model.RedfingerSlot"/>
+        <mapping class="com.mycompany.agustino.model.SalesTransaction"/>
     </session-factory>
 </hibernate-configuration>

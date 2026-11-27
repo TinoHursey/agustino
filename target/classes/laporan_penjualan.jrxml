@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan_penjualan" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce6d9438-0696-4a07-a670-e81d2d61bc9d">
+	<queryString>
+		<![CDATA[SELECT id, nama_item, jumlah_jual, harga_jual_total, hpp_saat_terjual, keuntungan, DATE_FORMAT(tanggal_jual, '%d-%m-%Y %H:%i') AS tgl FROM sales_transaction ORDER BY tanggal_jual DESC]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nama_item" class="java.lang.String"/>
+	<field name="jumlah_jual" class="java.lang.Integer"/>
+	<field name="harga_jual_total" class="java.math.BigDecimal"/>
+	<field name="hpp_saat_terjual" class="java.math.BigDecimal"/>
+	<field name="keuntungan" class="java.math.BigDecimal"/>
+	<field name="tgl" class="java.lang.String"/>
+	<variable name="TOTAL_PROFIT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{keuntungan}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="28" uuid="d5603e75-be97-42e3-a0ee-95937bdd3902"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PENJUALAN & KEUNTUNGAN (AYABE STORE)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="25">
+			<staticText>
+				<reportElement x="0" y="0" width="30" height="22" uuid="63449e5e-a07f-4dce-9df2-86549041384c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="0" width="95" height="22" uuid="c20c4e66-b2b3-4671-82a1-770d8cd82049"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="0" width="45" height="22" uuid="8f8b6b0f-21a7-45cb-8ef6-77dc36f3ee22"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="0" width="95" height="22" uuid="6abd462c-8b58-46ca-be54-bfe1477be145"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Harga Jual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="0" width="95" height="22" uuid="e653609d-b159-4d04-992c-baacadb4bdac"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Modal (HPP)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="0" width="95" height="22" uuid="2a03c4d7-db07-4967-bf76-c7fed8721450"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Keuntungan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="95" height="22" uuid="e3995245-68bd-4676-968b-7c20795c9bb3"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Waktu Jual]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22">
+			<textField>
+				<reportElement x="0" y="0" width="30" height="20" uuid="01139e9d-f1e5-4b24-8e05-326097c1f314"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="0" width="95" height="20" uuid="814d94e5-bd89-4425-a1b5-4e6e8644172a"/>
+				<textFieldExpression><![CDATA[$F{nama_item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="125" y="0" width="45" height="20" uuid="f2639311-a7da-4ff8-a218-9482dda1373f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{jumlah_jual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="170" y="0" width="95" height="20" uuid="4ae3e5e8-af2c-4a14-8a63-d39d1cf263b7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{harga_jual_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="265" y="0" width="95" height="20" uuid="fc463b6c-0af2-4518-a2f8-ba72903c6375"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{hpp_saat_terjual}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="360" y="0" width="95" height="20" uuid="3fdc3e6a-1fb9-440a-ac3b-d90556a62a8e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{keuntungan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="95" height="20" uuid="ad3e0d34-65d8-428e-bc0e-a1db0fde446e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tgl}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="35">
+			<staticText>
+				<reportElement x="230" y="10" width="130" height="20" uuid="30b47819-2cd0-462c-b7c0-79b1196b40a3"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL KEUNTUNGAN:]]></text>
+			</staticText>
+			<textField pattern="Rp #,##0">
+				<reportElement x="360" y="10" width="95" height="20" uuid="1a5a66f4-237a-42a1-819f-5069eb381f79"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_PROFIT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan_pembelian" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fa64ac02-3553-456d-9ddc-4e39058de00f">
+	<queryString>
+		<![CDATA[SELECT id, nama_item, jumlah, harga_beli_total, hpp_per_unit, DATE_FORMAT(tanggal_input, '%d-%m-%Y %H:%i') AS tgl FROM procurement_hpp ORDER BY tanggal_input DESC]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nama_item" class="java.lang.String"/>
+	<field name="jumlah" class="java.lang.Integer"/>
+	<field name="harga_beli_total" class="java.math.BigDecimal"/>
+	<field name="hpp_per_unit" class="java.math.BigDecimal"/>
+	<field name="tgl" class="java.lang.String"/>
+	<variable name="TOTAL_MODAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{harga_beli_total}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="28" uuid="32902a8f-aebd-4555-8570-416233a3077f"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PEMBELIAN STOK & MODAL (AYABE STORE)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="25">
+			<staticText>
+				<reportElement x="0" y="0" width="40" height="22" uuid="2a3b5366-8458-494e-bdb4-b9893393c0dc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="120" height="22" uuid="6c33d4d3-126a-4c95-9513-49f10b1acc6d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="0" width="60" height="22" uuid="0d9373aa-a041-4b56-bd85-de9204b43ba6"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="0" width="110" height="22" uuid="e4f9cbb9-e630-4d17-ad60-1cb0fbd02d51"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Modal (Rp)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="0" width="105" height="22" uuid="181fc5e3-3764-422b-9e7f-1386f5cb35c8"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HPP / Unit (Rp)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="0" width="110" height="22" uuid="1b0fdeb4-6c3f-4b78-8329-c99a10596177"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Waktu Input]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22">
+			<textField>
+				<reportElement x="0" y="0" width="40" height="20" uuid="e8187e4a-1753-42ff-83aa-58acc18ab0d3"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="120" height="20" uuid="084702bb-46be-40f0-9c5f-696562b5b3e2"/>
+				<textFieldExpression><![CDATA[$F{nama_item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="0" width="60" height="20" uuid="7fdb68fd-3ffe-42c1-87ca-6b9d4216a0c3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="220" y="0" width="110" height="20" uuid="7facb1bc-212e-4079-b9fa-f65d112d5636"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{harga_beli_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="330" y="0" width="105" height="20" uuid="600c686e-d46c-4d08-8090-39c1d691e7c7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{hpp_per_unit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="0" width="110" height="20" uuid="d3090d8e-3fac-4378-981c-77ec56b324b3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tgl}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="35">
+			<staticText>
+				<reportElement x="120" y="10" width="100" height="20" uuid="75d65622-263d-47f5-bbc8-f68b98b7a4ef"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL MODAL:]]></text>
+			</staticText>
+			<textField pattern="Rp #,##0">
+				<reportElement x="220" y="10" width="110" height="20" uuid="8798aa76-62fe-43ae-b48f-1a99d41e5952"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_MODAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
